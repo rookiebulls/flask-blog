@@ -3,6 +3,7 @@ from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField, PasswordField, TextAreaField
 from wtforms.validators import Required
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.bootstrap import Bootstrap
 import os
 
 app = Flask(__name__)
@@ -11,6 +12,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(os.path.abspat
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
 db = SQLAlchemy(app)
+bootstrap = Bootstrap(app)
+
 
 class Post(db.Model):
 
@@ -30,15 +33,15 @@ class Post(db.Model):
 
 
 class loginForm(Form):
-	username = StringField('username', validators=[Required()])
-	password = PasswordField('password', validators=[Required()])
-	submit = SubmitField('Submit')
+	username = StringField('Username', validators=[Required()])
+	password = PasswordField('Password', validators=[Required()])
+	submit = SubmitField('Login')
 
 
 class writeForm(Form):
-	title = StringField('title', validators=[Required()])
-	article = TextAreaField('article', validators=[Required()])
-	submit = SubmitField('Submit')
+	title = StringField('Title', validators=[Required()])
+	article = TextAreaField('Article', validators=[Required()])
+	submit = SubmitField('Publish')
 
 
 
@@ -62,13 +65,15 @@ def login():
 			flash('Wrong username or password. Try again.')
 	return render_template('login.html', form=form)
 
+
+
 @app.route('/write', methods=['GET', 'POST'])
 def write():
 
 	form = writeForm()
 	if not session.get('logged_in'):
 		flash('You need to login first')
-		return redirect(url_for('home'))
+		return redirect(url_for('login'))
 	if form.validate_on_submit():
 
 		title = form.title.data
@@ -77,6 +82,12 @@ def write():
 		db.session.commit()
 		return redirect(url_for('home'))
 	return render_template('write.html', form=form)
+
+
+@app.route('/article/<int:post_id>')
+def article(post_id):
+	posts = Post.query.filter_by(id=post_id).all()
+	return render_template('article.html', posts=posts)
 
 
 
