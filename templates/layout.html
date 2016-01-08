@@ -34,12 +34,12 @@
              <li><a href="#">One more separated link</a></li>
            </ul>
          </li>
-        {% if session.logged_in %}
+        {% if current_user.is_authenticated %}
         <li><a href="{{url_for('write')}}">Write</a></li>
         {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">
-      {% if session.logged_in %}
+      {% if  current_user.is_authenticated %}
         <li><a href="{{url_for('logout')}}">Logout</a></li>
       {% else %}
         <li><a href="{{url_for('login')}}">Login</a></li>

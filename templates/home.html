@@ -15,16 +15,11 @@
 			  <div class="blog-post">
 			    <a href="{{url_for('article', post_id=post.id)}}"><h2 class="blog-post-title">{{post.title}}</h2></a>
 			    <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-			    <p>{{post.article}}</p>
+			    <p>{{post.article[:5]}}</p>
+			    <hr>
 			  </div>
 			{% endfor %}
 		 {% endblock%}
-          <nav>
-            <ul class="pager">
-              <li><a href="#">Previous</a></li>
-              <li><a href="#">Next</a></li>
-            </ul>
-          </nav>
 
         </div>
 
@@ -41,10 +36,11 @@
 
               </ol>
             </div>
+            
             <div class="sidebar-module">
               <h4>Tags</h4>
               <ol class="list-unstyled">
-
+                <li><a href="#">Python <span class="badge">2</span></a></li>
               </ol>
             </div>
             </div><!-- /.blog-sidebar -->
