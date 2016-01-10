@@ -4,22 +4,23 @@
     <div class="row">
     <div class="col-sm-1"></div>
     <div class="col-sm-8">
-	{% for post in posts %}
+	
+	{% if post %}
 	<h2> {{post.title}}</h2>
-	<span class="label label-default">2016-1-8</span>
-	<span class="label label-info">python</span>
+	<span class="label label-default">{{post.pub_date.strftime('%Y-%m-%d')}}</span>
+	<span class="label label-info">{{post.catergory.name}}</span>
 	<hr>
       <p>{{post.article | safe}}</p>
-	{% endfor %}
 
 	  <nav>
 	    <ul class="pager">
-	      <li><a href="#">Previous</a></li>
-	      <li><a href="#">Next</a></li>
+	      <li><a href="{{url_for('article', post_id=ids[ids.index(post.id)-1])}}">Previous</a></li>
+	      <li><a href="{{url_for('article', post_id=ids[ids.index(post.id)+1])}}">Next</a></li>
 	    </ul>
 	  </nav>
 	</div>
 	</div>
+	{% endif %}
 
 
 </div>

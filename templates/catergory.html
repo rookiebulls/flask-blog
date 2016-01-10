@@ -11,7 +11,7 @@
 
 
          {% block post%}
-           {% for post in posts %}
+           {% for post in posts_of_catergory %}
 			  <div class="blog-post">
 			    <a href="{{url_for('article', post_id=post.id)}}"><h2 class="blog-post-title">{{post.title}}</h2></a>
 			    <p class="blog-post-meta">{{post.pub_date.strftime('%Y-%m-%d')}} by <a href="#">Mark</a></p>
@@ -25,22 +25,16 @@
 
 
           <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-            <div class="sidebar-module sidebar-module-inset">
-              <h4>About</h4>
-               <p>It's not about the salary, it's all about reality.</p>
-            </div>
-
             <div class="sidebar-module">
               <h4>Catergories</h4>
               <ol class="list-unstyled">
               {% for catergory in catergories %}
-               <li><a href="{{url_for('articles_of_catergory', catergory_name=catergory[0].name)}}">{{catergory[0].name}} <span class="badge">{{catergory[1]}}</span></a></li>
+               <li><a href="{{url_for('articles_of_catergory', catergory_name=catergory[0].name)}}">{{catergory[0].name}} <span class="badge">2</span></a></li>
               {% endfor %}
 
               </ol>
             </div>
             
-
             </div><!-- /.blog-sidebar -->
 
 
