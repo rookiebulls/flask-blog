@@ -121,8 +121,8 @@ class writeForm(Form):
 @app.route('/page/<int:page>')
 def home(page=1):
 	posts = Post.query.order_by(Post.pub_date.desc()).paginate(page, 2, False)
-
 	catergories = []
+
 	for catergory in Catergory.query.all():
 		post_count = Post.query.filter_by(catergory_id=catergory.id).count()
 		catergories.append((catergory, post_count))
@@ -176,27 +176,30 @@ def write():
 @app.route('/article/<int:post_id>')
 def article(post_id): 
 	# same_catergory_post_ids = None
-	post = Post.query.filter_by(id=post_id).first()
+	# post = Post.query.filter_by(id=post_id).first()
+	post = Post.query.get(post_id)
 	# if post:
 		# filter_catergory = Catergory.query.filter_by(name=post.catergory.name).first()
 		# some_catergory_posts = filter_catergory.posts
 		# print same_catergory_post_ids
 	catergories = []
 	for catergory in Catergory.query.all():
-		post_count = Post.query.filter_by(catergory_id=catergory.id).all()
-		catergories.append((catergory, len(post_count)))
+		post_count = Post.query.filter_by(catergory_id=catergory.id).count()
+		catergories.append((catergory, post_count))
 	return render_template('article.html', post=post, catergories=catergories)
 
 
 @app.route('/<catergory_name>')
-def articles_of_catergory(catergory_name):
+@app.route('/<catergory_name>/<int:page>')
+def articles_of_catergory(catergory_name, page=1):
 	catergories = []
 	for catergory in Catergory.query.all():
-		post_count = Post.query.filter_by(catergory_id=catergory.id).all()
-		catergories.append((catergory, len(post_count)))
+		post_count = Post.query.filter_by(catergory_id=catergory.id).count()
+		catergories.append((catergory, post_count))
 	catergory= Catergory.query.filter_by(name=catergory_name).first()
-	posts_of_catergory = catergory.posts
-	return render_template('catergory.html', posts_of_catergory=posts_of_catergory, catergories=catergories)
+	posts= catergory.posts.order_by(Post.pub_date.desc()).paginate(page, 2, False)
+	# posts = Post.query.filter_by(catergory.id).paginate(page, 2, False)
+	return render_template('catergory.html', posts=posts, catergories=catergories, catergory_name=catergory_name)
 
 
 @app.route('/logout')

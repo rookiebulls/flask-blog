@@ -7,7 +7,6 @@
 	
 	{% if post %}
 	<h2> {{post.title}}</h2>
-	<span class="label label-default">{{post.pub_date.strftime('%Y-%m-%d')}}</span>
 	<span class="label label-info">{{post.catergory.name}}</span>
 	<hr>
       <p>{{post.article | safe}}</p>
@@ -26,7 +25,7 @@
 
 {% block footer%}
 <footer class="blog-footer ">
-  <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+  <p>© Copyright 2016-2016 <a href="#">Email: rookiebulls@gmail.com</a></p>
   <p>
     <a href="#">Back to top</a>
   </p>

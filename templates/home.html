@@ -13,9 +13,10 @@
          {% block post%}
            {% for post in posts.items %}
 			  <div class="blog-post">
-			    <a href="{{url_for('article', post_id=post.id)}}"><h2 class="blog-post-title">{{post.title}}</h2></a>
-			    <p class="blog-post-meta">{{post.pub_date.strftime('%Y-%m-%d')}} by <a href="#">Mark</a></p>
+			    <h2 class="blog-post-title">{{post.title}}</h2>
+			    <p class="blog-post-meta">Posted at <span class="label label-default">{{post.pub_date.strftime('%Y-%m-%d')}}</span> by <span class="label label-danger">Leo Xie</span></p>
 			    <p>{{post.article[:5]}}</p>
+          <a href="{{url_for('article', post_id=post.id)}}"><p>Read more...</p></a>
 			    <hr>
 			  </div>
 			{% endfor %}
@@ -71,7 +72,7 @@
 
 {% block footer%}
 <footer class="blog-footer">
-  <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+  <p>© Copyright 2016-2016 <a href="#">Email: rookiebulls@gmail.com</a></p>
   <p>
     <a href="#">Back to top</a>
   </p>
