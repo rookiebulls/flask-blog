@@ -11,16 +11,14 @@
 	<span class="label label-info">{{post.catergory.name}}</span>
 	<hr>
       <p>{{post.article | safe}}</p>
+    {% else %}}
+    <h2>Oops, nothing here!</h2>
+    {% endif %}
 
-	  <nav>
-	    <ul class="pager">
-	      <li><a href="{{url_for('article', post_id=ids[ids.index(post.id)-1])}}">Previous</a></li>
-	      <li><a href="{{url_for('article', post_id=ids[ids.index(post.id)+1])}}">Next</a></li>
-	    </ul>
-	  </nav>
+
 	</div>
 	</div>
-	{% endif %}
+	
 
 
 </div>

@@ -29,7 +29,7 @@
               <h4>Catergories</h4>
               <ol class="list-unstyled">
               {% for catergory in catergories %}
-               <li><a href="{{url_for('articles_of_catergory', catergory_name=catergory[0].name)}}">{{catergory[0].name}} <span class="badge">2</span></a></li>
+               <li><a href="{{url_for('articles_of_catergory', catergory_name=catergory[0].name)}}">{{catergory[0].name}} <span class="badge">{{catergory[1]}}</span></a></li>
               {% endfor %}
 
               </ol>

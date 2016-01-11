@@ -118,13 +118,14 @@ class writeForm(Form):
 
 
 @app.route('/')
-def home():
-	posts = Post.query.all()
-	posts = posts[::-1]
+@app.route('/page/<int:page>')
+def home(page=1):
+	posts = Post.query.order_by(Post.pub_date.desc()).paginate(page, 2, False)
+
 	catergories = []
 	for catergory in Catergory.query.all():
-		post_count = Post.query.filter_by(catergory_id=catergory.id).all()
-		catergories.append((catergory, len(post_count)))
+		post_count = Post.query.filter_by(catergory_id=catergory.id).count()
+		catergories.append((catergory, post_count))
 
 	return render_template('home.html', posts=posts, catergories=catergories)
 
@@ -176,15 +177,15 @@ def write():
 def article(post_id): 
 	# same_catergory_post_ids = None
 	post = Post.query.filter_by(id=post_id).first()
-	if post:
-		same_catergory_posts = Catergory.query.filter_by(name=post.catergory.name).first()
-		ids = [catergory_post.id for catergory_post in same_catergory_posts.posts]
+	# if post:
+		# filter_catergory = Catergory.query.filter_by(name=post.catergory.name).first()
+		# some_catergory_posts = filter_catergory.posts
 		# print same_catergory_post_ids
 	catergories = []
 	for catergory in Catergory.query.all():
 		post_count = Post.query.filter_by(catergory_id=catergory.id).all()
 		catergories.append((catergory, len(post_count)))
-	return render_template('article.html', post=post, catergories=catergories,ids=ids)
+	return render_template('article.html', post=post, catergories=catergories)
 
 
 @app.route('/<catergory_name>')
