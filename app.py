@@ -5,6 +5,7 @@ from wtforms.validators import Required
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.login import LoginManager, login_user, logout_user, UserMixin, login_required
+from flask.ext.moment import Moment
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
@@ -17,6 +18,7 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
+moment = Moment(app)
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.init_app(app)
@@ -158,10 +160,13 @@ def write():
 		db.session.commit()
 		return redirect(url_for('home'))
     """
+    all_catergories = Catergory.query.all()
     if request.method == 'POST':
     	title = request.form['title']
     	article = request.form['article']
+    	# catergory_select = request.form['catergory']
     	catergory_select = request.form['catergory']
+    	
     	catergory_search = Catergory.query.filter_by(name=catergory_select).first()
     	if catergory_search:
 	    	db.session.add(Post(title=title, article=article, pub_date=datetime.utcnow(), catergory=catergory_search))
@@ -170,7 +175,19 @@ def write():
     	db.session.commit()
     	return redirect(url_for('home'))
 
-    return render_template('write.html')
+    return render_template('write.html', all_catergories=all_catergories)
+
+
+@app.route('/addcatergory', methods=['POST'])
+@login_required
+def add_catergory():
+	if request.method == 'POST':
+		name = request.form['catergory']
+		catergory = Catergory(name=name)
+		db.session.add(catergory)
+		db.session.commit()
+		return redirect(url_for('write'))
+
 
 
 @app.route('/article/<int:post_id>')
