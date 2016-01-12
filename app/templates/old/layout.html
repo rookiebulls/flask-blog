@@ -1,0 +1,86 @@
+{% extends "bootstrap/base.html" %}
+
+
+
+{% block title %}Leo's Blog{% endblock title%}
+{% block head %}
+{{super()}}
+
+    <link href="{{url_for('static', filename='css/blog.css')}}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{url_for('static', filename='images/favicon.ico')}}">
+
+      {{ moment.include_jquery() }}
+      {{ moment.include_moment() }}
+      {{ moment.lang("es") }}
+{% endblock head%}
+
+{% block navbar %}
+  <nav class="navbar navbar-default navbar-static-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{url_for('home')}}">Leo's Blog</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+           <a href="{{url_for('home')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Articles <span class="caret"></span></a>
+           <ul class="dropdown-menu">
+             {% for catergory in catergories %}
+               <li><a href="{{url_for('articles_of_catergory', catergory_name=catergory[0].name)}}">{{catergory[0].name}} </a></li>
+             {% endfor %}
+           </ul>
+         </li>
+        {% if current_user.is_authenticated %}
+        <li><a href="{{url_for('write')}}">Write</a></li>
+        {% endif %}
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      {% if  current_user.is_authenticated %}
+        <li><a href="{{url_for('logout')}}">Logout</a></li>
+      {% else %}
+        <li><a href="{{url_for('login')}}">Login</a></li>
+      {% endif %}
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+{% endblock navbar %}
+
+
+{% block content %}
+
+{% block post%}
+{% endblock post%}
+
+{% block footer %}
+<footer class="blog-footer">
+  <p>© Copyright 2016-{{ moment().format('YYYY') }} <a href="#">Email: rookiebulls@gmail.com</a></p>
+  <p>
+    <a href="#">Back to top</a>
+  </p>
+</footer>
+{% endblock footer %}
+
+
+
+
+{% endblock content %}
+
+
+{% block scripts %}
+ <script type="text/javascript">
+  $('a[href="' + this.location.pathname + '"]').parents('li,ul').addClass('active');
+</script>
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  {{super()}}
+
+{% endblock scripts %}
