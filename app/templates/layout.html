@@ -6,8 +6,8 @@
 {% block head %}
 {{super()}}
 
-    <link href="{{url_for('static', filename='css/blog.css')}}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{url_for('static', filename='images/favicon.ico')}}">
+    <link href="{{url_for('main.static', filename='css/blog.css')}}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{url_for('main.static', filename='images/favicon.ico')}}">
 
       {{ moment.include_jquery() }}
       {{ moment.include_moment() }}
@@ -25,29 +25,29 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{url_for('home')}}">Leo's Blog</a>
+      <a class="navbar-brand" href="{{url_for('main.home')}}">Leo's Blog</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-           <a href="{{url_for('home')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Articles <span class="caret"></span></a>
+           <a href="{{url_for('main.home')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Articles <span class="caret"></span></a>
            <ul class="dropdown-menu">
              {% for catergory in catergories %}
-               <li><a href="{{url_for('articles_of_catergory', catergory_name=catergory[0].name)}}">{{catergory[0].name}} </a></li>
+               <li><a href="{{url_for('main.articles_of_catergory', catergory_name=catergory[0].name)}}">{{catergory[0].name}} </a></li>
              {% endfor %}
            </ul>
          </li>
         {% if current_user.is_authenticated %}
-        <li><a href="{{url_for('write')}}">Write</a></li>
+        <li><a href="{{url_for('main.write')}}">Write</a></li>
         {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">
       {% if  current_user.is_authenticated %}
-        <li><a href="{{url_for('logout')}}">Logout</a></li>
+        <li><a href="{{url_for('main.logout')}}">Logout</a></li>
       {% else %}
-        <li><a href="{{url_for('login')}}">Login</a></li>
+        <li><a href="{{url_for('main.login')}}">Login</a></li>
       {% endif %}
       </ul>
     </div><!-- /.navbar-collapse -->

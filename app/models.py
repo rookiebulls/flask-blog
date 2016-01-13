@@ -1,5 +1,6 @@
 from . import db
 from flask.ext.login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class Catergory(db.Model):
@@ -10,11 +11,10 @@ class Catergory(db.Model):
 	name  = db.Column(db.String(20))
 	posts = db.relationship('Post', backref='catergory', lazy='dynamic')
 
-	# def __init__(self, name):
-		# self.name = name
 
-	# def __repr__(self):
-		# return '<catergory:%r' % self.name
+	def __repr__(self):
+		return '<catergory:%r' % self.catergory
+
 
 
 
@@ -28,11 +28,6 @@ class Post(db.Model):
 	pub_date = db.Column(db.DateTime)
 	catergory_id = db.Column(db.Integer, db.ForeignKey('catergory.id'))
 
-
-	# def __init__(self, title, article):
-		# self.title = title
-		# self.article = article
-		# self.pub_date = datetime.utcnow()
 
 	def __repr__(self):
 		return '<tilele:%r' % self.title
@@ -48,14 +43,6 @@ class User(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(64), unique=True, nullable=False)
 	password_hash = db.Column(db.String(128), nullable=False)
-
-
-	# def __init__(self, username, password, active=True):
-		# self.username = username
-		# self.password = self.set_password(password)
-		# self.password_hash = generate_password_hash(password)
-		# self.active = active		
-
 
 	def verify_password(self, password):
 		return check_password_hash(self.password_hash, password)
