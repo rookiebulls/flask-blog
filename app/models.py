@@ -1,6 +1,7 @@
 from . import db
 from flask.ext.login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 
 class Catergory(db.Model):
@@ -13,7 +14,7 @@ class Catergory(db.Model):
 
 
 	def __repr__(self):
-		return '<catergory:%r' % self.catergory
+		return '<catergory:%r' % self.name
 
 
 
@@ -24,8 +25,8 @@ class Post(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(80))
-	article = db.Column(db.Text)
-	pub_date = db.Column(db.DateTime)
+	content = db.Column(db.Text)
+	pub_date = db.Column(db.DateTime, default=datetime.utcnow)
 	catergory_id = db.Column(db.Integer, db.ForeignKey('catergory.id'))
 
 
@@ -47,15 +48,15 @@ class User(UserMixin, db.Model):
 	def verify_password(self, password):
 		return check_password_hash(self.password_hash, password)
 
-	def is_active(self):
+	# def is_active(self):
 		# return self.active
-		return True
+		# return True
 
-	def is_authenticated(self):
-		return True
+	# def is_authenticated(self):
+		# return True
 
-	def is_anonymous(self):
-		return False
+	# def is_anonymous(self):
+		# return False
 
 	def __repr__(self):
 		return '<user:%r' % self.username	

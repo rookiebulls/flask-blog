@@ -1,10 +1,14 @@
 /*
  * Globals
  */
-
+html,
 body {
   font-family: Georgia, "Times New Roman", Times, serif;
   color: #555;
+}
+
+body a:hover{
+  text-decoration: none;
 }
 
 h1, .h1,
@@ -20,6 +24,7 @@ h6, .h6 {
 }
 
 
+
 /*
  * Override Bootstrap's default container.
  */
@@ -29,6 +34,7 @@ h6, .h6 {
     width: 970px;
   }
 }
+
 
 
 /*
@@ -82,6 +88,8 @@ h6, .h6 {
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
+
 .blog-title {
   margin-top: 30px;
   margin-bottom: 0;
@@ -101,13 +109,23 @@ h6, .h6 {
 .blog-main {
   font-size: 18px;
   line-height: 1.5;
+
 }
 
 /* Sidebar modules for boxing content */
+.blog-sidebar {
+ 
+}
+
 .sidebar-module {
   padding: 15px;
   margin: 0 -15px 15px;
 }
+
+.sidebar-module a:hover {
+  text-decoration: underline;
+}
+
 .sidebar-module-inset {
   padding: 15px;
   background-color: #f5f5f5;
@@ -126,7 +144,7 @@ h6, .h6 {
   text-align: left;
 }
 .pager > li > a {
-  width: 140px;
+  width: 100px;
   padding: 10px 20px;
   text-align: center;
   border-radius: 30px;
@@ -138,15 +156,30 @@ h6, .h6 {
  */
 
 .blog-post {
-  margin-bottom: 60px;
+  margin-bottom: 20px;
 }
+
+
 .blog-post-title {
   margin-bottom: 5px;
-  font-size: 40px;
+  font-size: 30px;
+}
+.blog-post-title:hover {
+  color: #999;
 }
 .blog-post-meta {
   margin-bottom: 20px;
   color: #999;
+  font-size: 15px;
+}
+
+/*
+ *Blog content
+ */
+.blog-content {
+  font-size: 15px;
+  line-height: 1.5;
+
 }
 
 
@@ -161,6 +194,13 @@ h6, .h6 {
   background-color: #f9f9f9;
   border-top: 1px solid #e5e5e5;
 }
+
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+
+.login-panel {
+  margin-top: 100px;
+}
+
+

@@ -1,0 +1,36 @@
+{% extends "layout.html"%}
+
+
+{% block post %}
+
+<div class="container">
+
+      <div class="row">
+
+        <div class="col-sm-8 blog-main">
+          {% include "main/_posts.html" %}
+
+          {% include "main/_prev_next_catergory.html"%}
+
+        </div>
+
+
+          <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            
+              {% include "main/_catergories.html"%}
+            
+
+            </div><!-- /.blog-sidebar -->
+
+
+     </div>
+
+
+       
+     </div><!-- /.row -->
+
+   </div><!-- /.container -->
+
+
+{% endblock %}
+ 

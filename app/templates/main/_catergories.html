@@ -1,0 +1,9 @@
+<div class="sidebar-module">
+<h4>Catergories</h4>
+	<ol class="list-unstyled">
+	{% for catergory in catergories %}
+	<li><a href="{{url_for('main.filter_by_catergory', catergory_name=catergory[0].name)}}">{{catergory[0].name}} <span class="badge">{{catergory[1]}}</span></a></li>
+	{% endfor %}
+
+	</ol>
+</div>

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block post %}
+<div class="container">
+    <div class="row">
+    <div class="col-sm-8 blog-content">
+	
+	{% if post %}
+	{% if current_user.is_authenticated%}
+	<a href="{{url_for('main.edit', post_id=post.id)}}"><span class="glyphicon glyphicon-edit pull-right">Edit</span></a>
+	{% endif %}
+	<h2> {{post.title}}</h2>
+	<span class="label label-default">{{moment(post.pub_date).format('ll')}}</span>
+	<span class="label label-info">{{post.catergory.name}}</span>
+    
+	<hr>
+      {{post.content|safe}}
+    {% else %}}
+    <h2>Oops, nothing here!</h2>
+    {% endif %}
+      
+
+	</div>
+	<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+	  
+	    {% include "main/_catergories.html"%}
+	  
+
+	  </div><!-- /.blog-sidebar -->
+	</div>
+
+
+	
+
+
+</div>
+
+
+    
+
+{% endblock%}

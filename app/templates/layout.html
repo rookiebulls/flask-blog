@@ -5,17 +5,12 @@
 {% block title %}Leo's Blog{% endblock title%}
 {% block head %}
 {{super()}}
-
-    <link href="{{url_for('main.static', filename='css/blog.css')}}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{url_for('main.static', filename='images/favicon.ico')}}">
-
-      {{ moment.include_jquery() }}
-      {{ moment.include_moment() }}
-      {{ moment.lang("es") }}
+<link href="{{url_for('static', filename='blog.css')}}" rel="stylesheet">
+<link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
 {% endblock head%}
 
 {% block navbar %}
-  <nav class="navbar navbar-default navbar-static-top">
+  <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -35,19 +30,25 @@
            <a href="{{url_for('main.home')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Articles <span class="caret"></span></a>
            <ul class="dropdown-menu">
              {% for catergory in catergories %}
-               <li><a href="{{url_for('main.articles_of_catergory', catergory_name=catergory[0].name)}}">{{catergory[0].name}} </a></li>
+               <li><a href="{{url_for('main.filter_by_catergory', catergory_name=catergory[0].name)}}">{{catergory[0].name}} </a></li>
              {% endfor %}
            </ul>
          </li>
         {% if current_user.is_authenticated %}
-        <li><a href="{{url_for('main.write')}}">Write</a></li>
+        <li><a href="{{url_for('main.new')}}">New post</a></li>
+        <li><a href="{{url_for('main.editall')}}">Edit</a></li>
         {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">
-      {% if  current_user.is_authenticated %}
-        <li><a href="{{url_for('main.logout')}}">Logout</a></li>
+      {% if not current_user.is_authenticated %}
+        <li><a href="{{url_for('auth.login')}}">Login</a></li>
       {% else %}
-        <li><a href="{{url_for('main.login')}}">Login</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="http://www.gravatar.com/avatar/816d106f567b61780c50a805ceed3f0f?s=18">{{current_user.username}}<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+        </ul>
+        </li>
       {% endif %}
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -57,30 +58,38 @@
 
 
 {% block content %}
+<div class="container">
+
+{%with messages=get_flashed_messages()%}
+  {% for message in messages %}
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{message}}
+  </div>
+  {% endfor %}
+{% endwith %}
+
 
 {% block post%}
 {% endblock post%}
+</div>
 
-{% block footer %}
-<footer class="blog-footer">
-  <p>© Copyright 2016-{{ moment().format('YYYY') }} <a href="#">Email: rookiebulls@gmail.com</a></p>
+<footer class="blog-footer ">
+  <p>&copy; Copyright 2011-{{ moment().format('YYYY') }} <a href="mailto:{{'rookiebulls@gmail.com'}}">Email: rookiebulls@gmail.com</a></p>
   <p>
     <a href="#">Back to top</a>
   </p>
 </footer>
-{% endblock footer %}
-
-
-
-
 {% endblock content %}
 
 
-{% block scripts %}
- <script type="text/javascript">
-  $('a[href="' + this.location.pathname + '"]').parents('li,ul').addClass('active');
-</script>
-<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-  {{super()}}
 
+{% block scripts %}
+  {{super()}}
+  {{ moment.include_jquery() }}
+  {{ moment.include_moment() }}
+  {{ moment.lang("en") }}
+  <script type="text/javascript">
+$('.blog-footer').css('margin-top',$(document).height() - ($('.navbar').height() + $('.container').height()+80));
+</script>
 {% endblock scripts %}

@@ -1,0 +1,84 @@
+{% extends "layout.html"%}
+
+{% block post %}
+<div class="container">
+
+<div class="page-header">
+<div class="media">
+  <div class="media-left media-top">
+    <img class="media-object" src="http://www.gravatar.com/avatar/816d106f567b61780c50a805ceed3f0f?s=100" alt="about">
+  </div>
+  <div class="media-body">
+     <h4 class="media-heading">{{current_user.username}}</h4>
+   </div>
+</div>
+</div>
+<h3>Edit catergory</h3>
+<div class="panel panel-default">
+<div class="panel-body">
+<a class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal">New</a>
+<form method="POST" action="{{url_for('main.delete_catergory')}}">
+
+{% for catergory in catergories %}
+<div class="checkbox">
+  <label>
+    <input type="checkbox" value="{{catergory[0].name}}" name="checklist">
+    {{catergory[0].name}}
+  </label>
+</div>
+{% endfor %}
+
+<button class="btn btn-danger btn-xs" type="submit">Delete</button>
+</form>
+</div>
+</div>
+
+<h3>Edit articles</h3>
+<div class="panel panel-default">
+<div class="panel-body">
+<form method="POST" action="{{url_for('main.delete_post')}}">
+
+{% for post in posts %}
+{% set index=loop.index %}
+<div class="checkbox">
+  <label>
+    <input type="checkbox" value="{{post.title}}" name="postlist">
+    <span>{{index}}. </span><strong> {{post.title}} </strong>  under <a href="#">#{{post.catergory.name}}#</a>
+  </label>
+  <a class="btn btn-primary btn-xs pull-right" href="{{url_for('main.edit', post_id=post.id)}}">Edit</a>
+  <hr>
+</div>
+
+{% endfor %}
+<button class="btn btn-danger btn-xs" type="submit">Delete</button>
+</form>
+</div>
+</div>
+
+
+
+
+
+</div>
+
+<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Add a catergory</h4>
+        </div>
+        <div class="modal-body">
+          <form action="{{ url_for('main.add_catergory') }}" method=post>
+            <div class="form-group">
+              <input type="text" class="form-control" name="catergory">
+            </div>                          
+            <button type="submit" class="btn btn-primary">Submit</button>               
+          </form>
+        </div>
+      </div>
+     </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "layout.html"%}
+
+
+{% block post %}
+
+<div class="container">
+
+      <div class="row">
+
+        <div class="col-sm-8 blog-main">
+          {% include "main/_posts.html" %}
+
+          {% include "main/_prev_next.html"%}
+
+        </div>
+
+
+          <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+              <div class="media">
+                <div class="media-left media-top">
+                    <img class="media-object" src="http://www.gravatar.com/avatar/816d106f567b61780c50a805ceed3f0f?s=64" alt="about">
+                </div>
+                <div class="media-body">
+                   <h4 class="media-heading">Kevin Garnett</h4>
+  
+                 </div>
+                  <p>I'm such a charming guy.
+                   Mail me if you want my signature. <a href="mailto:{{'rookiebulls@gmail.com'}}">rookiebulls@gmail.com</a></p>
+              </div>
+               
+            </div>
+
+              {% include "main/_catergories.html"%}
+            
+
+            </div><!-- /.blog-sidebar -->
+
+
+     </div>
+
+
+       
+     </div><!-- /.row -->
+
+   </div><!-- /.container -->
+
+
+{% endblock %}
+ 
